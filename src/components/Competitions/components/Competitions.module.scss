@@ -1,0 +1,64 @@
+.title {
+  text-align: left;
+}
+
+.competitionsList {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 24px;
+
+  padding-top: 24px;
+  padding-bottom: 24px;
+  padding-left: 0;
+  padding-right: 0;
+  margin: 0;
+}
+
+.cardLink {
+  text-decoration: none;
+  color: var(--system_black);
+  transform: scale(1);
+  transition: .2s linear;
+
+  &:hover {
+    transform: scale(1.03);
+  }
+  &:focus {
+    outline: 1px dotted var(--main-color);
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 22px;
+}
+
+.cardHeader {
+  margin: 0;
+}
+.cardImg {
+  max-width: 150px;
+  min-height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  overflow: hidden;
+}
+
+.cardBody {
+  text-align: center;
+}
+.cardTitle {
+  font-size: 22px;
+  color: var(--system_black);
+  margin: 0;
+}
+.cardSubtitle {
+  font-size: 16px;
+  color: gray;
+  margin: 0;
+}

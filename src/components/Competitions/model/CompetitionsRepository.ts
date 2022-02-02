@@ -13,7 +13,7 @@ export class CompetitionsRepositoryImpl implements CompetitionsRepository {
     const response = await instance
       .get(`competitions?areas=2077&plan=${plan}`)
       .then((res) => {
-        return res.data
+        return res.data.competitions;
       })
       .catch((error) => {
         console.log('getCompetitions error', error);

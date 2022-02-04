@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './Competitions.module.scss';
 import { CompetitionsRepository } from '../model/CompetitionsRepository';
 import { CompetitionType } from '../../../common/model';
@@ -22,7 +23,7 @@ function Competitions(props: { competitionsRepository: CompetitionsRepository })
         {
           competitions.map((item: CompetitionType) => {
             return (
-              <a href={ `#${item.id}` } className={ styles.cardLink } key={ item.id }>
+              <Link to={ `/competition-calendar/${item.id}` } className={ styles.cardLink } key={ item.id }>
                 <li className={ styles.card }>
                   <figure className={ styles.cardHeader }>
                     <img src={ item.area.ensignUrl || item.emblemUrl } alt='Логотип турнира' className={ styles.cardImg } />
@@ -32,7 +33,7 @@ function Competitions(props: { competitionsRepository: CompetitionsRepository })
                     <p className={ styles.cardSubtitle }>{ item.area.name }</p>
                   </figcaption>
                 </li>
-              </a>
+              </Link>
             )
           })
         }

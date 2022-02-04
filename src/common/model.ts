@@ -39,8 +39,6 @@ export type Competition = {
   lastUpdated: string,
 }
 
-export type CompetitionOfMatches = Omit<Competition, 'emblemUrl' | 'currentSeason' | 'seasons' | 'numberOfAvailableSeasons'>
-
 export enum MatchStatus {
   SCHEDULED = 'SCHEDULED',
   LIVE = 'LIVE',
@@ -96,13 +94,6 @@ export type Match = {
   homeTeam: MatchTeam,
   awayTeam: MatchTeam,
   referees: Referee[],
-}
-
-export type CompetitionMatches = {
-  count: number,
-  filters: any,
-  competition: CompetitionOfMatches,
-  matches: Match[],
 }
 
 export type Team = {

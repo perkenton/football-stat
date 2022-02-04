@@ -1,13 +1,13 @@
 import { instance } from '../../../common/constants';
-import { Competition, Plan } from '../../../common/model';
+import { CompetitionType, Plan } from '../../../common/model';
 
 export interface CompetitionsRepository {
-  getCompetitions(): Promise<Competition[]>;
+  getCompetitions(): Promise<CompetitionType[]>;
 }
 
 export class CompetitionsRepositoryImpl implements CompetitionsRepository {
 
-  async getCompetitions(): Promise<Competition[]> {
+  async getCompetitions(): Promise<CompetitionType[]> {
     const plan = Plan.TIER_ONE;
 
     const response = await instance

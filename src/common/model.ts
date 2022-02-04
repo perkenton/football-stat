@@ -26,7 +26,7 @@ export type Season = {
   winner?: Winner,
 }
 
-export type Competition = {
+export type CompetitionType = {
   id: number,
   area: Area,
   name: string,

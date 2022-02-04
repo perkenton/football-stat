@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Competitions.module.scss';
 import { CompetitionsRepository } from '../model/CompetitionsRepository';
-import { Competition } from '../../../common/model';
+import { CompetitionType } from '../../../common/model';
 
 function Competitions(props: { competitionsRepository: CompetitionsRepository }) {
-  const [ competitions, setCompetitions ] = useState<Competition[]>([]);
+  const [ competitions, setCompetitions ] = useState<CompetitionType[]>([]);
 
   async function getCompetitions() {
     setCompetitions(await props.competitionsRepository.getCompetitions());
@@ -20,7 +20,7 @@ function Competitions(props: { competitionsRepository: CompetitionsRepository })
       <h1 className={ styles.title }>Турниры</h1>
       <ul className={ styles.competitionsList }>
         {
-          competitions.map((item: Competition) => {
+          competitions.map((item: CompetitionType) => {
             return (
               <a href={ `#${item.id}` } className={ styles.cardLink } key={ item.id }>
                 <li className={ styles.card }>

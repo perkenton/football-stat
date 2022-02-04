@@ -23,7 +23,7 @@ function Competitions(props: { competitionsRepository: CompetitionsRepository })
         {
           competitions.map((item: CompetitionType) => {
             return (
-              <Link to={ `/competition-calendar/${item.id}` } className={ styles.cardLink } key={ item.id }>
+              <Link to={ `/competition/${item.id}` } className={ styles.cardLink } key={ item.id }>
                 <li className={ styles.card }>
                   <figure className={ styles.cardHeader }>
                     <img src={ item.area.ensignUrl || item.emblemUrl } alt='Логотип турнира' className={ styles.cardImg } />

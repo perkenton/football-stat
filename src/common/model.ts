@@ -38,3 +38,69 @@ export type Competition = {
   numberOfAvailableSeasons?: number,
   lastUpdated: string,
 }
+
+export type CompetitionOfMatches = Omit<Competition, 'emblemUrl' | 'currentSeason' | 'seasons' | 'numberOfAvailableSeasons'>
+
+export enum MatchStatus {
+  SCHEDULED = 'SCHEDULED',
+  LIVE = 'LIVE',
+  IN_PLAY = 'IN_PLAY',
+  PAUSED = 'PAUSED',
+  FINISHED = 'FINISHED',
+  POSTPONED = 'POSTPONED',
+  SUSPENDED = 'SUSPENDED',
+  CANCELED = 'CANCELED',
+}
+
+export type MatchOdds = {
+  msg: string,
+}
+
+export type Score = {
+  homeTeam: number | null,
+  awayTeam: number | null,
+}
+
+export type MatchTeam = {
+  id: number,
+  name: string,
+}
+
+export type Referee = {
+  id: number,
+  name: string,
+  role: string,
+  nationality: string,
+}
+
+export type MatchScore = {
+  winner: string,
+  duration: string,
+  fullTime: Score,
+  halfTime: Score,
+  extraTime: Score,
+  penalties: Score,
+}
+
+export type Match = {
+  id: number,
+  season: Season,
+  utcDate: string,
+  status: MatchStatus,
+  matchday: number,
+  stage: string,
+  group?: any,
+  lastUpdated: string,
+  odds: MatchOdds,
+  score: MatchScore,
+  homeTeam: MatchTeam,
+  awayTeam: MatchTeam,
+  referees: Referee[],
+}
+
+export type CompetitionMatches = {
+  count: number,
+  filters: any,
+  competition: CompetitionOfMatches,
+  matches: Match[],
+}

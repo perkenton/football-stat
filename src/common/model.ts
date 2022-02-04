@@ -12,8 +12,8 @@ export enum Plan {
 
 export type Season = {
   id: number,
-  startDate: Date,
-  endDate: Date,
+  startDate: string,
+  endDate: string,
   currentMatchday: number,
   winner?: string,
 }
@@ -28,5 +28,5 @@ export type Competition = {
   currentSeason: Season,
   seasons: Season[],
   numberOfAvailableSeasons: number,
-  lastUpdated: Date,
+  lastUpdated: string,
 }

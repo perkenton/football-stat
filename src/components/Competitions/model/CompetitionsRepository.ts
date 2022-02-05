@@ -1,23 +1,16 @@
 import { instance } from '../../../common/constants';
-import { CompetitionType, Plan } from '../../../common/model';
+import { Plan } from '../../../common/model';
+import { AxiosResponse } from 'axios';
 
 export interface CompetitionsRepository {
-  getCompetitions(): Promise<CompetitionType[]>;
+  getCompetitions(): Promise<AxiosResponse>;
 }
 
 export class CompetitionsRepositoryImpl implements CompetitionsRepository {
 
-  async getCompetitions(): Promise<CompetitionType[]> {
-    const plan = Plan.TIER_ONE;
-
+  async getCompetitions(): Promise<AxiosResponse> {
     const response = await instance
-      .get(`competitions?areas=2077&plan=${plan}`)
-      .then((res) => {
-        return res.data.competitions;
-      })
-      .catch((error) => {
-        console.log('getCompetitions error', error);
-      });
+      .get(`competitions?areas=2077&plan=${Plan.TIER_ONE}`)
 
     return response;
   }

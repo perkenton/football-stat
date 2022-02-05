@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Competitions.module.scss';
-import { CompetitionsRepository } from '../model/CompetitionsRepository';
+import { CompetitionsPresenter } from '../model/CompetitionsPresenter';
 import { CompetitionType } from '../../../common/model';
 
-function Competitions(props: { competitionsRepository: CompetitionsRepository }) {
+
+function Competitions(props: { competitionsPresenter: CompetitionsPresenter }) {
+  const { Search } = Input;
+  let navigate = useNavigate();
   const [ competitions, setCompetitions ] = useState<CompetitionType[]>([]);
 
   async function getCompetitions() {
-    setCompetitions(await props.competitionsRepository.getCompetitions());
+    setCompetitions(await props.competitionsPresenter.getCompetitions());
   }
 
   useEffect(() => {

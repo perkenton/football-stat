@@ -1,5 +1,14 @@
+.pageHeader {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
 .title {
   text-align: left;
+}
+.searchInput {
+  width: 320px;
 }
 
 .competitionsList {

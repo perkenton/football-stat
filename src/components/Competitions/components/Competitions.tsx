@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { Input } from 'antd';
 import styles from './Competitions.module.scss';
 import { CompetitionsPresenter } from '../model/CompetitionsPresenter';
 import { CompetitionType } from '../../../common/model';
@@ -18,10 +19,35 @@ function Competitions(props: { competitionsPresenter: CompetitionsPresenter }) {
     getCompetitions();
   }, [])
 
+  function handleSearch(value: string) {
+    if(!value) {
+      props.competitionsPresenter.clearSearchRequest();
+      navigate('/competitions');
+      getCompetitions();
+      return;
+    }
+    const searchValue = value.trim().toLowerCase();
+    if(value) navigate(`/competitions?search=${searchValue}`)
+    setCompetitions(props.competitionsPresenter.searchCompetitions(searchValue));
+  }
+
 
   return (
     <>
-      <h1 className={ styles.title }>Турниры</h1>
+      <div className={ styles.pageHeader }>
+        <h1 className={ styles.title }>Турниры</h1>
+        <Search
+          id='search'
+          autoComplete='off'
+          spellCheck={ false }
+          size='large'
+          placeholder='Название турнира'
+          className={ styles.searchInput }
+          allowClear
+          onSearch={ (value) => handleSearch(value) }
+        />
+      </div>
+
       <ul className={ styles.competitionsList }>
         {
           competitions.map((item: CompetitionType) => {

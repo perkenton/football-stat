@@ -1,3 +1,4 @@
+import moment from 'moment';
 
 export type Area = {
   id: number,
@@ -111,4 +112,9 @@ export type Team = {
   clubColors: string,
   venue: string,
   lastUpdated: string,
+}
+
+export type DatesFilter = {
+  dateFrom?: moment.Moment,
+  dateTo?: moment.Moment,
 }

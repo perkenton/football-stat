@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Input } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import styles from './Competitions.module.scss';
 import { CompetitionsPresenter } from '../model/CompetitionsPresenter';
 import { CompetitionType } from '../../../common/model';
@@ -48,25 +49,30 @@ function Competitions(props: { competitionsPresenter: CompetitionsPresenter }) {
         />
       </div>
 
-      <ul className={ styles.competitionsList }>
-        {
-          competitions.map((item: CompetitionType) => {
-            return (
-              <Link to={ `/competition/${item.id}` } className={ styles.cardLink } key={ item.id }>
-                <li className={ styles.card }>
-                  <figure className={ styles.cardHeader }>
-                    <img src={ item.area.ensignUrl || item.emblemUrl } alt='Логотип турнира' className={ styles.cardImg } />
-                  </figure>
-                  <figcaption className={ styles.cardBody }>
-                    <p className={ styles.cardTitle }>{ item.name }</p>
-                    <p className={ styles.cardSubtitle }>{ item.area.name }</p>
-                  </figcaption>
-                </li>
-              </Link>
-            )
-          })
-        }
-      </ul>
+      {
+        props.competitionsPresenter.loading ?
+        <LoadingOutlined className={ styles.loader } />
+          :
+        <ul className={ styles.competitionsList }>
+          {
+            competitions.map((item: CompetitionType) => {
+              return (
+                <Link to={`/competition?competitionId=${item.id}`} className={ styles.cardLink } key={ item.id }>
+                  <li className={ styles.card }>
+                    <figure className={ styles.cardHeader }>
+                      <img src={ item.area.ensignUrl || item.emblemUrl } alt='Логотип турнира' className={ styles.cardImg } />
+                    </figure>
+                    <figcaption className={ styles.cardBody }>
+                      <p className={ styles.cardTitle }>{ item.name }</p>
+                      <p className={ styles.cardSubtitle }>{ item.area.name }</p>
+                    </figcaption>
+                  </li>
+                </Link>
+              )
+            })
+          }
+        </ul>
+      }
     </>
   );
 }

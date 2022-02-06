@@ -90,13 +90,23 @@ function Competition(props: { competitionPresenter: CompetitionPresenter }) {
               </Button>
             </Form>
             <Button
-              type='ghost'
               size='small'
-              icon={ <RedoOutlined /> }
-              onClick={ () => getMatches() }
+              className={ styles.button }
+              onClick={ resetFilter }
             >
-              Обновить календарь
+              Сбросить
             </Button>
+
+            <Tooltip key={ 2 } title='Обновить календарь' className={ styles.updateButton }>
+              <Button
+                shape='circle'
+                type='ghost'
+                size='small'
+                icon={ <RedoOutlined /> }
+                onClick={ () => getMatches() }
+                loading={ props.competitionPresenter.loading }
+              />
+            </Tooltip>
           </div>
 
           <MatchesTable matches={ match } loading={ props.competitionPresenter.loading } />

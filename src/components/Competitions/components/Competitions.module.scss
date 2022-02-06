@@ -11,6 +11,12 @@
   width: 320px;
 }
 
+.loader {
+  font-size: 24px;
+  margin-left: calc(50% - 12px);
+  margin-top: 24px;
+}
+
 .competitionsList {
   list-style: none;
   display: grid;

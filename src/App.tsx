@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import styles from './App.module.scss';
 import Header from './components/Header/Header';
 import CompetitionsPage from './components/Competitions/components/CompetitionsPage';
@@ -13,7 +13,8 @@ function App() {
       <Header />
       <main className={ styles.main }>
         <Routes>
-          <Route path='/' element={ <CompetitionsPage /> } />
+          <Route path='competitions' element={ <CompetitionsPage /> } />
+          <Route path='/' element={<Navigate replace to='/competitions' />} />
           <Route path='competition/:competitionId' element={ <CompetitionPage /> } />
         </Routes>
       </main>

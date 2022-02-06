@@ -25,15 +25,15 @@ function Competition(props: { competitionPresenter: CompetitionPresenter }) {
 
 
   async function getCompetition() {
-    params.competitionId && setCompetition(await props.competitionRepository.getCompetition(+params.competitionId))
+    setCompetition(await props.competitionPresenter.getCompetition())
   }
 
-  async function getMatches() {
-    params.competitionId && setMatch(await props.competitionRepository.getMatches(+params.competitionId));
+  async function getMatches(values?: DatesFilter) {
+    setMatch(await props.competitionPresenter.getMatches(values));
   }
 
   async function getTeams() {
-    params.competitionId && setTeams(await props.competitionRepository.getTeams(+params.competitionId));
+    setTeams(await props.competitionPresenter.getTeams());
   }
 
   useEffect(() => {

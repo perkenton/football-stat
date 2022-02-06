@@ -15,7 +15,7 @@ function App() {
         <Routes>
           <Route path='competitions' element={ <CompetitionsPage /> } />
           <Route path='/' element={<Navigate replace to='/competitions' />} />
-          <Route path='competition/:competitionId' element={ <CompetitionPage /> } />
+          <Route path='competition/*' element={ <CompetitionPage /> } />
         </Routes>
       </main>
     </HashRouter>

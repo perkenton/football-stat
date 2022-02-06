@@ -1,50 +1,32 @@
 import { instance } from '../../../common/constants';
-import { CompetitionType, Match, Team } from '../../../common/model';
+import { AxiosResponse } from 'axios';
 
 export interface CompetitionRepository {
-  getCompetition(competitionId: number): Promise<CompetitionType>,
-  getMatches(competitionId: number): Promise<Match[]>,
-  getTeams(competitionId: number): Promise<Team[]>,
+  getCompetition(competitionId: number): Promise<AxiosResponse>,
+  getMatches(competitionId: number): Promise<AxiosResponse>,
+  getTeams(competitionId: number): Promise<AxiosResponse>,
 }
 
 
 export class CompetitionRepositoryImpl implements CompetitionRepository {
 
-  async getCompetition(competitionId: number): Promise<CompetitionType> {
+  async getCompetition(competitionId: number): Promise<AxiosResponse> {
     const response = await instance
       .get(`competitions/${competitionId}`)
-      .then((res) => {
-        return res.data;
-      })
-      .catch((error) => {
-        console.log('getCompetition error', error);
-      });
 
     return response;
   }
 
-  async getMatches(competitionId: number): Promise<Match[]> {
+  async getMatches(competitionId: number): Promise<AxiosResponse> {
     const response = await instance
       .get(`competitions/${competitionId}/matches`)
-      .then((res) => {
-        return res.data.matches;
-      })
-      .catch((error) => {
-        console.log('getMatches error', error);
-      });
 
     return response;
   }
 
-  async getTeams(competitionId: number): Promise<Team[]> {
+  async getTeams(competitionId: number): Promise<AxiosResponse> {
     const response = await instance
       .get(`competitions/${competitionId}/teams`)
-      .then((res) => {
-        return res.data.teams;
-      })
-      .catch((error) => {
-        console.log('getTeams error', error);
-      });
 
     return response;
   }

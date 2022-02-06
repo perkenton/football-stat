@@ -8,6 +8,7 @@ import { MATCH_STATUS_MAP } from '../constants';
 
 function MatchesTable(props: {
   matches?: Match[],
+  loading: boolean,
 }) {
   const { Column } = Table;
 
@@ -15,7 +16,7 @@ function MatchesTable(props: {
     <Table
       dataSource={ props.matches }
       rowKey='id'
-      // loading={ loading }
+      loading={ props.loading }
     >
       <Column
         title='Статус'

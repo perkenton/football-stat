@@ -6,6 +6,7 @@ import { Team } from '../../../common/model';
 
 function TeamsTable(props: {
   teams?: Team[],
+  loading: boolean,
 }) {
   const { Column } = Table;
 
@@ -15,7 +16,7 @@ function TeamsTable(props: {
       dataSource={ props.teams }
       rowKey='id'
       pagination={ false }
-      // loading={ loading }
+      loading={ props.loading }
     >
       <Column
         title='Команда'

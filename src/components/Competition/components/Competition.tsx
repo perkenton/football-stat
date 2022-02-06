@@ -75,14 +75,16 @@ function Competition(props: { competitionRepository: CompetitionRepository }) {
               Обновить календарь
             </Button>
           </div>
-          <MatchesTable matches={ match } />
+
+          <MatchesTable matches={ match } loading={ props.competitionPresenter.loading } />
         </TabPane>
 
         <TabPane
           key='TEAMS'
           tab={ <div >Команды</div> }
         >
-          <TeamsTable teams={ teams } />
+          {/* TODO: поиск по названию команды */}
+          <TeamsTable teams={ teams } loading={ props.competitionPresenter.loading } />
         </TabPane>
       </Tabs>
     </>

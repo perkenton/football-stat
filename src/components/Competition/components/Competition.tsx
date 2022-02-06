@@ -36,6 +36,17 @@ function Competition(props: { competitionPresenter: CompetitionPresenter }) {
     setTeams(await props.competitionPresenter.getTeams());
   }
 
+  async function searchMatches(values: DatesFilter) {
+    await props.competitionPresenter.historyPush(values);
+    getMatches(values);
+    form.resetFields();
+  }
+
+  async function resetFilter() {
+    await props.competitionPresenter.resetFilter();
+    getMatches();
+  }
+
   useEffect(() => {
     getCompetition();
   }, [])

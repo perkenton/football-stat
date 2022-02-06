@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom';
 import { Button, Tabs } from 'antd';
 import { RedoOutlined } from '@ant-design/icons';
 import styles from './Competition.module.scss';
-import { CompetitionRepository } from '../model/CompetitionRepository';
+import { CompetitionPresenter } from '../model/CompetitionPresenter';
+import { CompetitionType, DatesFilter, Match, Team } from '../../../common/model';
 import MatchesTable from './MatchesTable';
 import TeamsTable from './TeamsTable';
 import { CompetitionType, Match, Team } from '../../../common/model';
@@ -14,8 +15,7 @@ enum TabsType {
 }
 
 
-function Competition(props: { competitionRepository: CompetitionRepository }) {
-  let params = useParams();
+function Competition(props: { competitionPresenter: CompetitionPresenter }) {
   const { TabPane } = Tabs;
 
   const [ competition, setCompetition ] = useState<CompetitionType>();

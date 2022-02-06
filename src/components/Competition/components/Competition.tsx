@@ -6,7 +6,6 @@ import { CompetitionPresenter } from '../model/CompetitionPresenter';
 import { CompetitionType, DatesFilter, Match, Team } from '../../../common/model';
 import MatchesTable from './MatchesTable';
 import TeamsTable from './TeamsTable';
-import { CompetitionType, Match, Team } from '../../../common/model';
 
 enum TabsType {
   MATCHES = 'MATCHES',

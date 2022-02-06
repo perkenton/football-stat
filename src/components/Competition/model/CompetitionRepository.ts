@@ -12,21 +12,21 @@ export class CompetitionRepositoryImpl implements CompetitionRepository {
 
   async getCompetition(url: string): Promise<AxiosResponse> {
     const response = await instance
-      .get(`competitions/${url}`)
+      .get(url)
 
     return response;
   }
 
   async getMatches(url: string): Promise<AxiosResponse> {
     const response = await instance
-      .get(`competitions/${url}/matches`)
+      .get(url)
 
     return response;
   }
 
   async getTeams(url: string): Promise<AxiosResponse> {
     const response = await instance
-      .get(`competitions/${url}/teams`)
+      .get(url)
 
     return response;
   }

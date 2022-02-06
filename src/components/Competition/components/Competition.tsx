@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { Button, Tabs } from 'antd';
+import { Button, DatePicker, Form, Tabs, Tooltip } from 'antd';
 import { RedoOutlined } from '@ant-design/icons';
 import styles from './Competition.module.scss';
 import { CompetitionPresenter } from '../model/CompetitionPresenter';
@@ -16,7 +15,9 @@ enum TabsType {
 
 
 function Competition(props: { competitionPresenter: CompetitionPresenter }) {
+  const DATE_FORMAT = 'DD.MM.YYYY';
   const { TabPane } = Tabs;
+  const [ form ] = Form.useForm();
 
   const [ competition, setCompetition ] = useState<CompetitionType>();
   const [ match, setMatch ] = useState<Match[]>();
@@ -66,6 +67,29 @@ function Competition(props: { competitionPresenter: CompetitionPresenter }) {
           tab={ <div >Календарь игр</div> }
         >
           <div className={ styles.paneHeader }>
+            <span className={ styles.text }>Фильтр по дате:</span>
+
+            <Form
+              onFinish={ searchMatches }
+              className={ styles.form }
+              form={ form }
+              // initialValues={  } // TODO: сделать initialValues после обновления страницы с запросом
+            >
+              <Form.Item name='dateFrom' rules={[{ required: true, message: 'Выберите дату' }]}>
+                <DatePicker format={ DATE_FORMAT } placeholder='с такого-то' size='small' />
+              </Form.Item>
+              <Form.Item name='dateTo' rules={[{ required: true, message: 'Выберите дату' }]}>
+                <DatePicker format={ DATE_FORMAT } placeholder='по такое-то' size='small' />
+              </Form.Item>
+              <Button
+                htmlType='submit'
+                size='small'
+                className={ styles.button }
+                disabled={ props.competitionPresenter.loading }
+              >
+                Найти
+              </Button>
+            </Form>
             <Button
               type='ghost'
               size='small'

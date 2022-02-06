@@ -2,31 +2,31 @@ import { instance } from '../../../common/constants';
 import { AxiosResponse } from 'axios';
 
 export interface CompetitionRepository {
-  getCompetition(competitionId: number): Promise<AxiosResponse>,
-  getMatches(competitionId: number): Promise<AxiosResponse>,
-  getTeams(competitionId: number): Promise<AxiosResponse>,
+  getCompetition(url: string): Promise<AxiosResponse>,
+  getMatches(url: string): Promise<AxiosResponse>,
+  getTeams(url: string): Promise<AxiosResponse>,
 }
 
 
 export class CompetitionRepositoryImpl implements CompetitionRepository {
 
-  async getCompetition(competitionId: number): Promise<AxiosResponse> {
+  async getCompetition(url: string): Promise<AxiosResponse> {
     const response = await instance
-      .get(`competitions/${competitionId}`)
+      .get(`competitions/${url}`)
 
     return response;
   }
 
-  async getMatches(competitionId: number): Promise<AxiosResponse> {
+  async getMatches(url: string): Promise<AxiosResponse> {
     const response = await instance
-      .get(`competitions/${competitionId}/matches`)
+      .get(`competitions/${url}/matches`)
 
     return response;
   }
 
-  async getTeams(competitionId: number): Promise<AxiosResponse> {
+  async getTeams(url: string): Promise<AxiosResponse> {
     const response = await instance
-      .get(`competitions/${competitionId}/teams`)
+      .get(`competitions/${url}/teams`)
 
     return response;
   }

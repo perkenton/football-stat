@@ -1,4 +1,3 @@
-import { instance } from '../../../common/constants';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { CompetitionType, DatesFilter, Match, Team } from '../../../common/model';
 import { CompetitionRepository } from './CompetitionRepository';
@@ -28,8 +27,7 @@ export class CompetitionPresenterImpl implements CompetitionPresenter {
 
   async getCompetition(): Promise<CompetitionType> {
     this.loading = true;
-    const response = await instance
-      .get(`competitions/${this.competitionId}`)
+    const response = await this.competitionRepository.getCompetition(`competitions/${this.competitionId}`)
       .then((res) => {
         return res.data;
       })
@@ -56,8 +54,7 @@ export class CompetitionPresenterImpl implements CompetitionPresenter {
     }
     const filters = this.getFilters(dateFilterFrom, dateFilterTo);
 
-    const response = await instance
-      .get(`competitions/${this.competitionId}/${filters}`)
+    const response = await this.competitionRepository.getMatches(`competitions/${this.competitionId}/${filters}`)
       .then((res) => {
         return res.data.matches;
       })
@@ -71,8 +68,7 @@ export class CompetitionPresenterImpl implements CompetitionPresenter {
 
   async getTeams(): Promise<Team[]> {
     this.loading = true;
-    const response = await instance
-      .get(`competitions/${this.competitionId}/teams`)
+    const response = await this.competitionRepository.getTeams(`competitions/${this.competitionId}/teams`)
       .then((res) => {
         return res.data.teams;
       })

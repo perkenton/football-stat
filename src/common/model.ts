@@ -81,8 +81,11 @@ export type MatchScore = {
   penalties: Score,
 }
 
+export type TeamsCompetition = Omit<CompetitionType, 'code' | 'emblemUrl' | 'plan' | 'currentSeason' | 'seasons' | 'numberOfAvailableSeasons' | 'lastUpdated'>
+
 export type Match = {
   id: number,
+  competition?: TeamsCompetition,
   season: Season,
   utcDate: string,
   status: MatchStatus,
@@ -97,7 +100,16 @@ export type Match = {
   referees: Referee[],
 }
 
-export type Team = {
+export type ActiveCompetitions = {
+  id: number,
+  name: string,
+  area: Area,
+  code?: string,
+  lastUpdated: string,
+  plan: Plan,
+}
+
+export type TeamType = {
   id: number,
   area: Area,
   name: string,
@@ -112,6 +124,7 @@ export type Team = {
   clubColors: string,
   venue: string,
   lastUpdated: string,
+  activeCompetitions?: ActiveCompetitions[],
 }
 
 export type DatesFilter = {

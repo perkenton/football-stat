@@ -1,6 +1,8 @@
 import { CompetitionsRepository } from './CompetitionsRepository';
 import { CompetitionType } from '../../../common/model';
 import { useLocation } from 'react-router-dom';
+import { AxiosError } from 'axios';
+import showError from '../../../common/utils/showError';
 
 
 export interface CompetitionsPresenter {
@@ -24,8 +26,9 @@ export class CompetitionsPresenterImpl implements CompetitionsPresenter {
       .then((res) => {
         return res.data.competitions;
       })
-      .catch((error) => {
-        console.log('getCompetitions error', error);
+      .catch((error: AxiosError) => {
+        console.error('getCompetitions error: ', error);
+        showError(error);
       });
     this.loading = false;
     if(this.searchRequest) return this.competitions.filter((item) => this.searchRequest && item.name.toLowerCase().includes(this.searchRequest));

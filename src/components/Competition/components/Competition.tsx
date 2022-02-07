@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Button, DatePicker, Form, Tabs, Tooltip } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { Button, DatePicker, Form, Tabs, Tooltip, Input } from 'antd';
 import { RedoOutlined } from '@ant-design/icons';
 import styles from './Competition.module.scss';
 import { CompetitionPresenter } from '../model/CompetitionPresenter';
@@ -17,6 +18,8 @@ function Competition(props: { competitionPresenter: CompetitionPresenter }) {
   const DATE_FORMAT = 'DD.MM.YYYY';
   const { TabPane } = Tabs;
   const [ form ] = Form.useForm();
+  const { Search } = Input;
+  let navigate = useNavigate();
 
   const [ competition, setCompetition ] = useState<CompetitionType>();
   const [ match, setMatch ] = useState<Match[]>();
@@ -42,9 +45,27 @@ function Competition(props: { competitionPresenter: CompetitionPresenter }) {
     form.resetFields();
   }
 
+  async function handleSearch(value: string) {
+    console.log('value', value)
+    if(!value) {
+      props.competitionPresenter.clearSearchRequest();
+      navigate(`/competition?competitionId=${props.competitionPresenter.competitionId}`);
+      getTeams();
+      return;
+    }
+    const searchValue = value.trim().toLowerCase();
+    if(value) navigate(`/competition?competitionId=${props.competitionPresenter.competitionId}&search=${searchValue}`);
+    setTeams(await props.competitionPresenter.searchTeams(searchValue));
+  }
+
   async function resetFilter() {
     await props.competitionPresenter.resetFilter();
     getMatches();
+  }
+
+  async function resetSearchRequest() {
+    await props.competitionPresenter.resetSearch();
+    getTeams();
   }
 
   useEffect(() => {
@@ -127,7 +148,25 @@ function Competition(props: { competitionPresenter: CompetitionPresenter }) {
           key='TEAMS'
           tab={ <div >Команды</div> }
         >
-          {/* TODO: поиск по названию команды */}
+          <div className={ styles.paneHeader }>
+            <Search
+              id='search'
+              autoComplete='off'
+              spellCheck={ false }
+              size='small'
+              placeholder='Поиск по командам'
+              className={ styles.searchInput }
+              allowClear
+              onSearch={ (value) => handleSearch(value) }
+            />
+            <Button
+              size='small'
+              onClick={ resetSearchRequest }
+            >
+              Сбросить
+            </Button>
+          </div>
+
           <TeamsTable teams={ teams } loading={ props.competitionPresenter.loading } />
         </TabPane>
       </Tabs>

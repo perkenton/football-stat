@@ -2,6 +2,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { TeamRepository } from './TeamRepository';
 import { TeamType, Match, DatesFilter } from '../../../common/model';
 import moment from 'moment';
+import { AxiosError } from 'axios';
+import showError from '../../../common/utils/showError';
 
 
 export interface TeamPresenter {
@@ -31,8 +33,9 @@ export class TeamPresenterImpl implements TeamPresenter {
       .then((res) => {
         return res.data;
       })
-      .catch((error) => {
-        console.log('getTeam error', error);
+      .catch((error: AxiosError) => {
+        console.error('getTeam error: ', error);
+        showError(error);
       });
     this.loading = false;
 
@@ -57,8 +60,9 @@ export class TeamPresenterImpl implements TeamPresenter {
       .then((res) => {
         return res.data.matches;
       })
-      .catch((error) => {
-        console.log('getTeamsMatch error', error);
+      .catch((error: AxiosError) => {
+        console.error('getTeamsMatch error: ', error);
+        showError(error);
       });
     this.loading = false;
 

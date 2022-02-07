@@ -1,13 +1,17 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Table } from 'antd';
-import { Match } from '../../../common/model';
-import scoreMaker from '../utils/scoreMaker';
-import formatDate from '../utils/formatDate';
-import { MATCH_STATUS_MAP } from '../constants';
+import cn from 'classnames';
+import styles from './MatchesTable.module.scss';
+import { Match } from '../../model';
+import scoreMaker from '../../utils/scoreMaker';
+import formatDate from '../../utils/formatDate';
+import { MATCH_STATUS_MAP } from '../../../components/Competition/constants';
 
 
 function MatchesTable(props: {
   matches?: Match[],
+  activeTeam?: number,
   loading: boolean,
 }) {
   const { Column } = Table;
@@ -34,7 +38,16 @@ function MatchesTable(props: {
         title='Хозяева'
         key='homeTeam'
         align='right'
-        render={ (match) => match.homeTeam.name }
+        render={ (match) => {
+          return (
+            <Link
+              to={ `/team?teamId=${match.homeTeam.id}` }
+              className={ cn(match.homeTeam.id === props.activeTeam && styles.activeTeam) }
+            >
+              { match.homeTeam.name }
+            </Link>
+          )
+        }}
       />
       <Column
         title='Счет'
@@ -49,7 +62,16 @@ function MatchesTable(props: {
         title='Гости'
         key='awayTeam'
         align='left'
-        render={ (match) => match.awayTeam.name }
+        render={ (match) => {
+          return (
+            <Link
+              to={ `/team?teamId=${match.awayTeam.id}` }
+              className={ cn(match.awayTeam.id === props.activeTeam && styles.activeTeam) }
+            >
+              { match.awayTeam.name }
+            </Link>
+          )
+        }}
       />
     </Table>
   )

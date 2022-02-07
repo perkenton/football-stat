@@ -98,7 +98,7 @@ function Competition(props: { competitionPresenter: CompetitionPresenter }) {
           tab={ <div >Календарь игр</div> }
         >
           <div className={ styles.paneHeader }>
-            <span className={ styles.text }>Фильтр по дате:</span>
+            <span className={ styles.text }>Поиск по дате:</span>
 
             <Form
               onFinish={ searchMatches }

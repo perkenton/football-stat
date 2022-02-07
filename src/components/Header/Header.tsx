@@ -12,7 +12,7 @@ function Header() {
         <ul className={ styles.menuList }>
 
           <li className={ styles.menuListItem }>
-            <NavLink to='/' className={ ({ isActive }) => cn(styles.menuListLink, isActive && styles.menuListLinkActive) } >Главная</NavLink>
+            <NavLink to='/' className={ ({ isActive }) => cn(styles.menuListLink, isActive && styles.menuListLinkActive) } >FootballStat</NavLink>
           </li>
 
         </ul>

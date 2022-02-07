@@ -23,13 +23,12 @@ export class CompetitionsPresenterImpl implements CompetitionsPresenter {
     this.competitions = await this.competitionsRepository.getCompetitions()
       .then((res) => {
         return res.data.competitions;
-    })
+      })
       .catch((error) => {
         console.log('getCompetitions error', error);
       });
-    if(this.searchRequest) return this.competitions.filter((item) => this.searchRequest && item.name.toLowerCase().includes(this.searchRequest));
     this.loading = false;
-
+    if(this.searchRequest) return this.competitions.filter((item) => this.searchRequest && item.name.toLowerCase().includes(this.searchRequest));
     return this.competitions;
   }
 

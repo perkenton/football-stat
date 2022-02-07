@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from './TeamsTable.module.scss';
 import { Table } from 'antd';
-import { Team } from '../../../common/model';
+import { TeamType } from '../../../common/model';
 
 
 function TeamsTable(props: {
-  teams?: Team[],
+  teams?: TeamType[],
   loading: boolean,
 }) {
   const { Column } = Table;

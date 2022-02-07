@@ -1,21 +1,27 @@
+import { useNavigate, useLocation } from 'react-router-dom';
 import { TeamRepository } from './TeamRepository';
-import { TeamType, Match } from '../../../common/model';
-import { useLocation } from 'react-router-dom';
+import { TeamType, Match, DatesFilter } from '../../../common/model';
+import moment from 'moment';
 
 
 export interface TeamPresenter {
   loading: boolean;
   getTeam(): Promise<TeamType>;
-  getTeamsMatch(): Promise<Match[]>;
+  getTeamsMatch(values?: DatesFilter): Promise<Match[]>;
+  historyPush(values: DatesFilter): void;
+  resetFilter(): void;
 }
 
 export class TeamPresenterImpl implements TeamPresenter {
   constructor(private teamRepositoryImpl: TeamRepository) {}
-  public loading: boolean = false;
-
   private location = useLocation();
-  private teamId = new URLSearchParams(this.location.search).get('teamId');
+  private navigate = useNavigate();
 
+  public loading: boolean = false;
+  public teamId: string | null = new URLSearchParams(this.location.search).get('teamId');
+
+  private dateFrom: string | null = new URLSearchParams(this.location.search).get('dateFrom');
+  private dateTo: string | null = new URLSearchParams(this.location.search).get('dateTo');
 
   async getTeam(): Promise<TeamType> {
     this.loading = true;
@@ -32,10 +38,21 @@ export class TeamPresenterImpl implements TeamPresenter {
     return response;
   }
 
-  async getTeamsMatch(): Promise<Match[]> {
+  async getTeamsMatch(values?: DatesFilter): Promise<Match[]> {
     this.loading = true;
+    let dateFilterFrom;
+    let dateFilterTo;
 
-    const response = await this.teamRepositoryImpl.getTeam(`teams/${this.teamId}/matches`)
+    if(values) {
+      dateFilterFrom = values.dateFrom && this.formatDate(values.dateFrom);
+      dateFilterTo = values.dateTo && this.formatDate(values.dateTo);
+    } else if(this.dateFrom || this.dateTo) {
+      dateFilterFrom = this.dateFrom;
+      dateFilterTo = this.dateTo;
+    }
+    const filters = this.getFilters(dateFilterFrom, dateFilterTo);
+
+    const response = await this.teamRepositoryImpl.getTeam(`teams/${this.teamId}/${filters}`)
       .then((res) => {
         return res.data.matches;
       })
@@ -45,6 +62,36 @@ export class TeamPresenterImpl implements TeamPresenter {
     this.loading = false;
 
     return response;
+  }
+
+  getFilters(from?: string | null, to?: string | null): string {
+    const dateFrom = from ? `dateFrom=${from}` : '';
+    const dateTo = to ? `&dateTo=${to}` : '';
+
+    return `matches?${dateFrom}${dateTo}`;
+  }
+
+  private formatDate(date: moment.Moment): string {
+    return moment(date).format('YYYY-MM-DD');
+  }
+
+  historyPush(values: DatesFilter): void {
+    const from = values.dateFrom && this.formatDate(values.dateFrom);
+    const to = values.dateTo && this.formatDate(values.dateTo);
+
+    const dateFrom = from ? `&dateFrom=${from}` : '';
+    const dateTo = to ? `&dateTo=${to}` : '';
+
+    const filters = `${dateFrom}${dateTo}`
+    const url = `/team?teamId=${this.teamId}${filters}`;
+
+    this.navigate(url);
+  }
+
+  resetFilter(): void {
+    this.dateFrom = null;
+    this.dateTo = null;
+    this.navigate(`/team?teamId=${this.teamId}`);
   }
 
 }

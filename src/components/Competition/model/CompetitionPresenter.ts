@@ -2,6 +2,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { CompetitionType, DatesFilter, Match, TeamType } from '../../../common/model';
 import { CompetitionRepository } from './CompetitionRepository';
 import moment from 'moment';
+import { AxiosError } from 'axios';
+import showError from '../../../common/utils/showError';
 
 
 export interface CompetitionPresenter {
@@ -38,8 +40,9 @@ export class CompetitionPresenterImpl implements CompetitionPresenter {
       .then((res) => {
         return res.data;
       })
-      .catch((error) => {
-        console.log('getCompetition error', error);
+      .catch((error: AxiosError) => {
+        console.error('getCompetition error: ', error);
+        showError(error);
       });
     this.loading = false;
 
@@ -63,10 +66,12 @@ export class CompetitionPresenterImpl implements CompetitionPresenter {
 
     const response = await this.competitionRepository.getMatches(`competitions/${this.competitionId}/${filters}`)
       .then((res) => {
+        console.log('res', res);
         return res.data.matches;
       })
-      .catch((error) => {
-        console.log('getMatches error', error);
+      .catch((error: AxiosError) => {
+        console.error('getMatches error: ', error);
+        showError(error);
       });
     this.loading = false;
 
@@ -79,8 +84,9 @@ export class CompetitionPresenterImpl implements CompetitionPresenter {
       .then((res) => {
         return res.data.teams;
       })
-      .catch((error) => {
-        console.log('getTeams error', error);
+      .catch((error: AxiosError) => {
+        console.error('getTeams error: ', error);
+        showError(error);
       });
     this.loading = false;
     if(this.searchRequest) return this.team.filter((item) => this.searchRequest && item.name.toLowerCase().includes(this.searchRequest));

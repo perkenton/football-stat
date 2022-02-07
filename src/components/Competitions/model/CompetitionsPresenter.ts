@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 export interface CompetitionsPresenter {
   loading: boolean;
   getCompetitions(): Promise<CompetitionType[]>;
-  searchCompetitions(request: string): CompetitionType[];
+  searchCompetitions(request: string): Promise<CompetitionType[]>;
   clearSearchRequest(): void;
 }
 
@@ -42,7 +42,9 @@ export class CompetitionsPresenterImpl implements CompetitionsPresenter {
   //   this.debounce((val: string) => this.searchCompetitions, val, 1000)
   // }
 
-  searchCompetitions(request: string): CompetitionType[] {
+  async searchCompetitions(request: string): Promise<CompetitionType[]> {
+    this.clearSearchRequest()
+    await this.getCompetitions();
     this.searchResult = this.competitions.filter((item) => item.name.toLowerCase().includes(request));
     return this.searchResult;
   }

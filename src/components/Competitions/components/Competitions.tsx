@@ -20,7 +20,7 @@ function Competitions(props: { competitionsPresenter: CompetitionsPresenter }) {
     getCompetitions();
   }, [])
 
-  function handleSearch(value: string) {
+  async function handleSearch(value: string) {
     if(!value) {
       props.competitionsPresenter.clearSearchRequest();
       navigate('/competitions');
@@ -28,8 +28,8 @@ function Competitions(props: { competitionsPresenter: CompetitionsPresenter }) {
       return;
     }
     const searchValue = value.trim().toLowerCase();
-    if(value) navigate(`/competitions?search=${searchValue}`)
-    setCompetitions(props.competitionsPresenter.searchCompetitions(searchValue));
+    if(value) navigate(`/competitions?search=${searchValue}`);
+    setCompetitions(await props.competitionsPresenter.searchCompetitions(searchValue));
   }
 
 

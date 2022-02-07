@@ -3,8 +3,8 @@ import { Button, DatePicker, Form, Tabs, Tooltip } from 'antd';
 import { RedoOutlined } from '@ant-design/icons';
 import styles from './Competition.module.scss';
 import { CompetitionPresenter } from '../model/CompetitionPresenter';
-import { CompetitionType, DatesFilter, Match, Team } from '../../../common/model';
-import MatchesTable from './MatchesTable';
+import { CompetitionType, DatesFilter, Match, TeamType } from '../../../common/model';
+import MatchesTable from '../../../common/components/MatchesTable/MatchesTable';
 import TeamsTable from './TeamsTable';
 
 enum TabsType {
@@ -20,7 +20,7 @@ function Competition(props: { competitionPresenter: CompetitionPresenter }) {
 
   const [ competition, setCompetition ] = useState<CompetitionType>();
   const [ match, setMatch ] = useState<Match[]>();
-  const [ teams, setTeams ] = useState<Team[]>();
+  const [ teams, setTeams ] = useState<TeamType[]>();
   const [ tabActiveKey, setTabActiveKey ] = useState<string>(TabsType.MATCHES);
 
 

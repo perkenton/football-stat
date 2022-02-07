@@ -6,23 +6,30 @@ import moment from 'moment';
 
 export interface CompetitionPresenter {
   loading: boolean;
+  competitionId: string | null;
   getCompetition(): Promise<CompetitionType>;
   getMatches(values?: DatesFilter): Promise<Match[]>;
   getTeams(): Promise<TeamType[]>;
   getFilters(from?: string | null, to?: string | null): string;
   historyPush(values: DatesFilter): void;
   resetFilter(): void;
+  searchTeams(request: string): Promise<TeamType[]>;
+  clearSearchRequest(): void;
+  resetSearch(): void;
 }
 
 export class CompetitionPresenterImpl implements CompetitionPresenter {
   constructor(private competitionRepository: CompetitionRepository) {}
-  public loading: boolean = false;
-
   private location = useLocation();
   private navigate = useNavigate();
-  private competitionId = new URLSearchParams(this.location.search).get('competitionId');
+
+  public loading: boolean = false;
+  public competitionId: string | null = new URLSearchParams(this.location.search).get('competitionId');
+
+  private team: TeamType[] = [];
   private dateFrom: string | null = new URLSearchParams(this.location.search).get('dateFrom');
   private dateTo: string | null = new URLSearchParams(this.location.search).get('dateTo');
+  private searchRequest: string | null = new URLSearchParams(this.location.search).get('search');
 
 
   async getCompetition(): Promise<CompetitionType> {
@@ -68,7 +75,7 @@ export class CompetitionPresenterImpl implements CompetitionPresenter {
 
   async getTeams(): Promise<TeamType[]> {
     this.loading = true;
-    const response = await this.competitionRepository.getTeams(`competitions/${this.competitionId}/teams`)
+    this.team = await this.competitionRepository.getTeams(`competitions/${this.competitionId}/teams`)
       .then((res) => {
         return res.data.teams;
       })
@@ -76,8 +83,8 @@ export class CompetitionPresenterImpl implements CompetitionPresenter {
         console.log('getTeams error', error);
       });
     this.loading = false;
-
-    return response;
+    if(this.searchRequest) return this.team.filter((item) => this.searchRequest && item.name.toLowerCase().includes(this.searchRequest));
+    return this.team;
   }
 
   getFilters(from?: string | null, to?: string | null): string {
@@ -107,6 +114,21 @@ export class CompetitionPresenterImpl implements CompetitionPresenter {
   resetFilter(): void {
     this.dateFrom = null;
     this.dateTo = null;
+    this.navigate(`/competition?competitionId=${this.competitionId}`);
+  }
+
+  async searchTeams(request: string): Promise<TeamType[]> {
+    this.clearSearchRequest();
+    await this.getTeams();
+    return this.team.filter((item) => item.name.toLowerCase().includes(request));
+  }
+
+  clearSearchRequest() {
+    this.searchRequest = null;
+  }
+
+  resetSearch(): void {
+    this.clearSearchRequest();
     this.navigate(`/competition?competitionId=${this.competitionId}`);
   }
 }

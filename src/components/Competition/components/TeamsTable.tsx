@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './TeamsTable.module.scss';
 import { Table } from 'antd';
 import { TeamType } from '../../../common/model';
@@ -22,12 +23,12 @@ function TeamsTable(props: {
         title='Команда'
         key='name'
         align='left'
-        render={ (team) => {
+        render={(team: TeamType) => {
           return (
-            <span className={ styles.teamBlock }>
+            <Link to={`/team?teamId=${team.id}`} className={ styles.teamBlock }>
               <span className={ styles.teamLogo }>{ team.crestUrl && <img src={ team.crestUrl } alt='Лого' width='22' /> }</span>
               <span>{ team.name }</span>
-            </span>
+            </Link>
           )
         }}
       />

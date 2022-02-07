@@ -66,7 +66,6 @@ export class CompetitionPresenterImpl implements CompetitionPresenter {
 
     const response = await this.competitionRepository.getMatches(`competitions/${this.competitionId}/${filters}`)
       .then((res) => {
-        console.log('res', res);
         return res.data.matches;
       })
       .catch((error: AxiosError) => {

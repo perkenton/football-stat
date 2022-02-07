@@ -46,7 +46,6 @@ function Competition(props: { competitionPresenter: CompetitionPresenter }) {
   }
 
   async function handleSearch(value: string) {
-    console.log('value', value)
     if(!value) {
       props.competitionPresenter.clearSearchRequest();
       navigate(`/competition?competitionId=${props.competitionPresenter.competitionId}`);

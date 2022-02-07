@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import { CompetitionType, DatesFilter, Match, Team } from '../../../common/model';
+import { CompetitionType, DatesFilter, Match, TeamType } from '../../../common/model';
 import { CompetitionRepository } from './CompetitionRepository';
 import moment from 'moment';
 
@@ -8,7 +8,7 @@ export interface CompetitionPresenter {
   loading: boolean;
   getCompetition(): Promise<CompetitionType>;
   getMatches(values?: DatesFilter): Promise<Match[]>;
-  getTeams(): Promise<Team[]>;
+  getTeams(): Promise<TeamType[]>;
   getFilters(from?: string | null, to?: string | null): string;
   historyPush(values: DatesFilter): void;
   resetFilter(): void;
@@ -66,7 +66,7 @@ export class CompetitionPresenterImpl implements CompetitionPresenter {
     return response;
   }
 
-  async getTeams(): Promise<Team[]> {
+  async getTeams(): Promise<TeamType[]> {
     this.loading = true;
     const response = await this.competitionRepository.getTeams(`competitions/${this.competitionId}/teams`)
       .then((res) => {

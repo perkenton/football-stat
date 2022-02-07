@@ -6,6 +6,7 @@ import moment from 'moment';
 
 export interface TeamPresenter {
   loading: boolean;
+  teamId: string | null;
   getTeam(): Promise<TeamType>;
   getTeamsMatch(values?: DatesFilter): Promise<Match[]>;
   historyPush(values: DatesFilter): void;

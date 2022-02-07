@@ -16,6 +16,8 @@ function MatchesTable(props: {
 }) {
   const { Column } = Table;
 
+  //TODO: добавить колонку названия турнира для использования в Team
+
   return (
     <Table
       dataSource={ props.matches }
